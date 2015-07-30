@@ -1,0 +1,20 @@
+{% extends "oj/base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <form method="post" enctype="multipart/form-data" action="{% url 'add_discussion_problem' problem.id %}">
+        <h2> 
+        Edit Your Post to Problem:{{problem.title}}:
+        </h2>
+        <table>
+            {{form.as_p}}
+        </table>
+        <input type="submit" class="btn btn-info" value="Confirm" />
+        <a href="{%  url 'discussion_problem' problem.id%}" class="btn btn-info" role="button">Cancel</a>
+        {% csrf_token %}
+    </form>
+</div>
+
+
+{% endblock %}

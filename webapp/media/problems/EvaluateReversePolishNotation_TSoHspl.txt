@@ -1,0 +1,15 @@
+Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+
+Valid operators are +, -, *, /. Each operand may be an integer or another expression.
+
+the first line of input is the number of arithmetic expressions and the following lines are expressions.
+
+sample input:
+2
+2,1,+,3,*
+4,13,5,/,+
+
+sample output:
+9
+6
+

@@ -1,0 +1,40 @@
+{% extends "oj/base.html" %}
+
+{% block competition-active %}
+active
+{% endblock %}
+
+{% block content %}
+<script>
+$(function(){
+    var starttime='{{starttime}}';
+    var competition_id = '{{competition_id}}'
+    $(".digits").countdown({
+        image: "/media/img/digits.png",
+        format: "mm:ss",
+        endTime: new Date(starttime),
+        timerEnd: function() { window.location.href = '/competition_single/' + competition_id;  }
+    });
+});
+</script>
+<style>
+
+</style>
+<div class="container">
+    <div class="row">
+        <div class='col-sm-4'>
+        </div>
+        <div class='col-sm-4'>
+            <h2 id='tip'>Competition will begin in:</h2>
+            <div class="wrapper">
+                <div class="cell ">
+                    <div id="holder">
+                        <div class="digits"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

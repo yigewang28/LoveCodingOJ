@@ -1,0 +1,15 @@
+The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.
+
+given n, return the total number of distinct solutions.
+
+sample:
+1
+2
+3
+4
+
+output:
+1
+0
+0
+2

@@ -1,0 +1,20 @@
+Given two strings, check whether they are anagram strings.
+String are separated by ‘,’ 
+first line of input is the number of string pairs and the following lines are string pairs.(case insensitive)
+
+
+sample input:
+5
+a,a
+a,b
+ab,ba
+Arrigo Boito,Tobia Gorrio
+Edward Gorey,Ogdred Weary
+
+sample output:
+true
+false
+true
+true
+true
+

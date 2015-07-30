@@ -1,0 +1,37 @@
+{% extends "oj/base.html" %}
+
+{% block content %}
+ 
+{% if user %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-0 col-md-offset-5">
+
+            <form method="post" enctype="multipart/form-data" action="{% url 'edit_profile' %}">
+                <h2> 
+                Edit Your Profile:
+                </h2>
+                <div class="form-group">
+                    <table>
+                        {{form.as_p}}
+                    </table>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Confirm" />
+                <a href="{%  url 'home' %}" class="btn btn-primary" role="button">Cancel</a>
+                {% csrf_token %}
+            </form>
+
+            {% endif %}
+               
+            <div>
+                {% for item in items %}
+                <p>{{item}}</p>
+                <p>Posted by <a href="{ % url 'profile' item.user.id %}">{{item.user.username}}</a> on {{item.time}}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

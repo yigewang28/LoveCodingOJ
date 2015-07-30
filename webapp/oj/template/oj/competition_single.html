@@ -1,0 +1,52 @@
+{% extends "oj/base.html" %}
+
+{% block competition-active %}
+active
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+   <table class="table">
+	    <thead>
+	      <tr>
+	        <th>Competition ID</th>
+	        <th>Author</th>
+	        <th>Start Time</th>
+	        <th>End Time</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      	<tr>
+	        	<td>{{competition.id}}</td>
+	        	<td>{{competition.author.username}}</td>
+	        	<td>{{competition.startdate}} {{competition.starttime}}</td>
+	        	<td>{{competition.enddate}} {{competition.endtime}}</td>
+	      	</tr>
+	    </tbody>
+  	</table>
+	<table class="table">
+	    <thead>
+	      <tr>
+	        <th>Problem ID</th>
+	        <th>Problem Title</th>
+	        <th>AC | Total</th>
+	        <th>Me: AC | Total</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	    	{% for problem in problems %}
+	      	<tr>
+	        	<td>{{problem.id}}</td>
+	        	<td><a href='{% url 'single_competition_problem' competition.id problem.id%}'>{{problem.title}}</a></td>
+	        	<td>{{problem.ac}} | {{problem.total}}</td>
+	        	<td>{{problem.ac_me}} | {{problem.total_me}}</td>
+	      	</tr>
+	      	{% endfor %}
+	    </tbody>
+  	</table>
+</div>
+<style>
+  	th,td {text-align: center;}
+</style>
+{% endblock %}

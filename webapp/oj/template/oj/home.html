@@ -1,0 +1,78 @@
+{% extends "oj/base.html" %}
+
+{% block home-active %}
+active
+{% endblock %}
+
+{% block content %}
+<style>
+
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="col-md-offset-1">
+                {% if user.profile.type == 2 %}
+                <div class="jumbotron">
+                    <form method="post" enctype="multipart/form-data" action="{% url 'add_news' %}">
+                        <h2> 
+                            Add news to the website:
+                        </h2>
+                        <table>
+                            {{form.as_p}}
+                        </table>
+                        <input type="submit" class="btn btn-info" value="Confirm" />
+                        {% csrf_token %}
+                    </form>
+                    <!--
+                    <article>
+                        <h2>LoveCoding has published!</h2>
+                        <p>LoveCoding is a website built by Xinyue Chen, Yichi Liu, and Yige Wang...
+                        It allows users to solve coding problems, discuss with other members of our community, 
+                            and participate in competitions.
+                        Now join us and have fun!</P>
+                    </article>
+                    -->
+                </div>
+                {% endif %}
+                {% for new in news %}
+                <div class = "jumbotron">
+                    <p> {{new.text}} </p>
+                </div>    
+                {% endfor %}
+
+            </div>
+        </div>
+
+
+        <div class="col-sm-4">
+            <div class="col-md-0">
+                <div class="jumbotron">
+                    <h3>World Rank</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Solved</th>
+                                <th>Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{user.username}}</td>
+                            <td>{{user.ac}}</td>
+                            <td>{{user.point}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

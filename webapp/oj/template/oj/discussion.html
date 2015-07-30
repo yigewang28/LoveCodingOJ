@@ -1,0 +1,19 @@
+{% extends "oj/base.html" %}
+
+{% block discussion-active %}
+active
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <form method="post" action="{% url 'register' %}">
+        <p> 
+        Discussions...
+        </p>
+        {% csrf_token %}
+    </form>
+</div>
+{% endblock %}
+
+

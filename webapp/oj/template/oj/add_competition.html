@@ -1,0 +1,48 @@
+{% extends "oj/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">  
+            <form method="post" enctype="multipart/form-data" action="{% url 'add_competition' %}">
+                <h3> 
+                    Pick your problems here:
+                </h3>
+                {% for problem in problems %}
+                <input type="checkbox" name="problem" value="{{problem.id}}" /> {{problem.title}}<br />
+                {% endfor %}
+                <br />
+                <p> Current time:
+                <script language="javascript">
+                var today = new Date();
+                var day = today.getDate();
+                var month = today.getMonth() + 1;
+                var year = today.getFullYear();
+                var hour = today.getHours();
+                var minutes = today.getMinutes();
+                var seconds = today.getSeconds();
+                document.write(month + "/" + day + "/" + year + " " + hour + ":" + minutes + ":" + seconds);
+                </script>
+                </p>
+                <div class="form-group">
+                    <label for="sd" class="control-label col-sm-4">Name </label>
+                    <div class="col-sm-7"><input type="text" name="name" id="sd" class="form-control"/><br/></div>
+                    <label for="sd" class="control-label col-sm-4">Start Date </label>
+                    <div class="col-sm-7"><input type="date" name="startdate" id="sd" class="form-control"/><br/></div>
+                    <label for="st" class="control-label col-sm-4">Start Time </label>
+                    <div class="col-sm-7"><input type="time" name="starttime" id="st" class="form-control"/><br/></div>
+                    <label for="ed" class="control-label col-sm-4">End Date </label>
+                    <div class="col-sm-7"><input type="date" name="enddate" id="ed" class="form-control"/><br/></div>
+                    <label for="et" class="control-label col-sm-4">End Time </label>
+                    <div class="col-sm-7"><input type="time" name="endtime" id="et" class="form-control"/><br/></div>
+                    <input type="submit" class="btn btn-primary" value="Confirm" />
+                </div>
+                <script>
+                document.getElementById('sd').value = new Date().toDateInputValue();                
+                </script>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

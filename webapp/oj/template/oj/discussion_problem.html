@@ -1,0 +1,111 @@
+{% extends "oj/base.html" %}
+
+{% block problem-active %}
+active
+{% endblock %}
+{% block content %}
+{% load staticfiles %} 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="{% static 'oj/bootstrap.js' %}"></script>
+<script src="{% static 'oj/bootstrap.min.js' %}"></script>
+<script>
+function getID(id) {
+  var el = document.getElementById(id);
+  var show_div = document.getElementById('showcomments-' + id);
+  if ( el.style.display != 'none' ) {
+    el.style.display = 'none';
+    show_div.innerHTML = 'Show Comments';
+  }
+  else {
+    el.style.display = 'block';
+    show_div.innerHTML = 'Hide Comments';
+  }
+}
+
+function trimfield(str) 
+{ 
+    return str.replace(/^\s+|\s+$/g,''); 
+}
+
+function validate_post(){
+    var post_text = document.getElementById('post-text');
+    if (trimfield(post_text.value) == '') {
+        alert("Empty post is not permitted!");
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function validate_comment(){
+    //var comment_text = f.comment-text.value;
+    //if (trimfield(comment_text.value) == '') {
+    //    alert("Empty comment is not permitted!");
+    //    return false;
+    //} else {
+    //    alert("What!")
+    //    return false;
+    //    //return true;
+    //}
+    alert("What!");
+    return false;
+}
+
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">  
+            <form method="post" onsubmit="return validate_post()" enctype="multipart/form-data" action="{% url 'add_discussion_problem' problem.id %}">  
+                <div class="jumbotron">
+
+                    <h3> 
+                        Add your opinion to "{{problem.title}}":
+                    </h3>
+                    <textarea id='post-text' class="form-control" rows="5" name="text" ></textarea>
+                    <br />
+                    <input type="submit" class="btn btn-primary" value="Confirm" />
+                    {% csrf_token %}
+
+                </div>
+            </form>
+
+            {% for post in posts %}
+            <div class="page-header">
+                <a class="pull-left" href="{% url 'profile' post.user.id %}">
+                    <img class="img-rounded" src="{% url 'photo' post.user.id %}" width="35px">
+                </a>
+                <p>&nbsp<a href="{% url 'profile' post.user.id %}">  {{post.user}}</a> at {{post.created}}:</p>
+                <h3>{{post.text}}</h3>
+                </br>
+                <button type="button" id="showcomments-{{post.id}}" onclick='getID({{post.id}})' class="btn btn-default" data-toggle="tooltip" data-placement="top" title="See what others say and add your comments!">Show Comments</button>
+                </br>
+                </br>
+
+                <div id='{{post.id}}' style="display:none">
+                    <form method="post" onsumbmit="return validate_comment();" enctype="multipart/form-data"  action="{% url 'add_comment_discussion_problem' post.id %}">
+                        <input type='text' name="text" id='comment-text' class="form-control" > 
+                        <br />
+                        <input type="submit" class="btn btn-primary" value="Add Comment">
+                        <br />
+                        {% csrf_token %}
+                    </form>
+                    <table class="table table-condensed">
+                        {% for comment in post.comments %} 
+                        <tr>
+                            <td class="col-md-8 col-md-push-3"><h4>{{comment.text}}</h4></td>
+                            <td class="col-md-4 col-md-pull-8"><a class="pull-left" href="{% url 'profile' comment.user.id %}">
+                                    <img class="img-circle" src="{% url 'photo' comment.user.id %}" width="35px"> </a>
+                                <a href="{% url 'profile' comment.user.id %}">&nbsp{{comment.user}}</a> 
+                                <p>{{comment.created}}</p></td>                          	    
+                        </tr>           
+                        {% endfor %} 
+                    </table>
+                </div>
+            </div>
+            {% endfor %} 
+        </div>
+    </div>
+</div>
+
+{% endblock %}

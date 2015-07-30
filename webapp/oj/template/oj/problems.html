@@ -1,0 +1,38 @@
+{% extends "oj/base.html" %}
+
+{% block problem-active %}
+active
+{% endblock %}
+
+{% block content %}
+<style>
+  	th,td {text-align: center;}
+</style>
+<div class="container"> 
+    {% if user.profile.type == 2 %}
+    <a href="{% url 'add_problem' %}" class="btn btn-default">Add a problem</a>
+    {% endif %} 
+	<table class="table table-hover">
+	    <thead>
+	      <tr>
+	        <th>Problem ID</th>
+	        <th>Problem Title</th>
+	        <th>AC | Total</th>
+	        <th>Me: AC | Total</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	    	{% for problem in problems %}
+	      	<tr>
+	        	<td>{{problem.id}}</td>
+	        	<td><a href='{% url 'single_problem' problem.id%}'>{{problem.title}}</a></td>
+	        	<td><a href='{% url 'submission_problem' problem.id%}'>{{problem.ac}} | {{problem.total}}</a></td>
+	        	<td>{{problem.ac_me}} | {{problem.total_me}}</td>
+	      	</tr>
+	      	{% endfor %}
+	    </tbody>
+  	</table>
+</div>
+{% endblock %}
+
+

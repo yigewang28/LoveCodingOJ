@@ -1,0 +1,40 @@
+
+{% extends "oj/base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 col-md-offset-3"> 
+            <form method="post" class="centered" action="{% url 'django.contrib.auth.views.login' %}">
+                <h4> 
+                LoveCoding is a platform that allows users to solve coding problems, discuss with other members of our community, and participate in competitions.</h4>
+                <h4>Now join us and have fun!
+                </h4>
+        </div>  
+        <div class="col-md-8 col-md-offset-5">      
+                <h2>
+                Please sign in:
+                </h2>
+                <table>
+                    <tr>
+                        <td>{{ form.username.label_tag }} </td>
+                        <td>{{ form.username }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form.password.label_tag }} </td>
+                        <td>{{ form.password }}</td>
+                    </tr>
+                </table>
+                <br>
+                <input type="submit" class="btn btn-primary" value="Login" />
+                <a href="/register" class="btn btn-primary" role="button">Sign up</a>
+                <input type="hidden" name="next" value="{{ next }}" />
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,32 @@
+{% extends "oj/base.html" %}
+
+{% block problem-active %}
+active
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <table class="table">
+        <thead>
+          <tr>
+            <th>User Name</th>
+            <th>Problem</th>
+            <th>Status</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for submission in submissions %}
+            <tr>
+                <td><a href="{% url 'profile' submission.user.id %}">&nbsp{{submission.user.username}}</a>
+                <td><a href='{% url 'single_problem' submission.problem.id%}'>{{submission.problem.id}}:{{submission.problem.title}}</a></td>
+                <td><a href='{% url 'submission_single' submission.id%}'>{{submission.state}}</a></td>
+                <td>{{submission.created}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+

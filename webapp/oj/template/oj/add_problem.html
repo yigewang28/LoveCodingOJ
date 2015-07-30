@@ -1,0 +1,23 @@
+{% extends "oj/base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-5">  
+            <form method="post" enctype="multipart/form-data" action="{% url 'add_problem' %}">
+                <h3> 
+                Add a problem here:
+                </h3>
+                <table>
+        	        {{form.as_p}}
+        	    </table>
+        	    <input type="submit" class="btn btn-primary" value="Confirm" />
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,61 @@
+<html>
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+<link href="{% static 'oj/bootstrap.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'oj/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'oj/global.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'oj/media.css' %}" rel="stylesheet" >
+<link rel="stylesheet" href="{% static 'oj/local.css' %}">
+<link rel="shortcut icon" type="image/png" href="{% static 'oj/favicon.gif' %}"/>
+<script src="{% static 'oj/jquery-1.11.2.min.js' %}"></script>
+<script src="{% static 'oj/jquery.countdown.js' %}"></script>
+<script src="{% static 'oj/bootstrap.js' %}"></script>
+<script src="{% static 'oj/bootstrap.min.js' %}"></script>
+
+<title> {% block title %} LoveCoding OJ {% endblock %} </title>
+</head>
+<body>
+<div class="container-fluid">
+    {% if hasLogin %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class ="{% block home-active%}non-active{% endblock %}"><a href="{% url 'home' %}">Home</a></li>
+                    <li class ="{% block problem-active%}non-active{% endblock %}"><a href="{% url 'problems' %}">Problems</a></li>
+                    <li class ="{% block competition-active%}non-active{% endblock %}"><a href="{% url 'competition' %}">Competition</a></li>
+                    <li class ="{% block submission-active%}non-active{% endblock %}"><a href="{% url 'submission_user' %}">My Submissions</a></li>
+                    <li class ="{% block profile-active%}non-active{% endblock %}"><a href="{% url 'myprofile' %}">My Profile</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'logout' %}">Log out  </a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </nav>
+    {% endif %}
+    <div class="jumbotron">
+        <div class="page-header">
+            <h2 class="center-text">Welcome to LoveCoding!</h2>
+        </div>   
+    </div> 
+    {% if errors %}
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4"> 
+            <h3> Form Validation Errors:</h3>
+            {% for error in errors %}
+            <p style="color:red">
+            {{error}}
+            </p>
+            {% endfor %}
+            {{errors}}
+        </div>
+    </div>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+</div>
+<br>
+</body>
+</html>

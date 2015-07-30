@@ -1,0 +1,110 @@
+{% extends "oj/base.html" %}
+
+{% block submission-active %}
+active
+{% endblock %}
+
+{% block content %}
+{% load staticfiles %}
+<script src="{% static 'oj/sonic.js' %}"></script>
+<script>
+function loadWaiting( ) {
+    //item = document.getElementById('wait-'+id);
+    var square = new Sonic({
+            width: 32,
+            height: 32,
+            stepsPerFrame: 1,
+            trailLength: 1,
+            pointDistance: .02,
+            fps: 30,
+            fillColor: '#05E2FF',
+            step: function(point, index) {
+                this._.beginPath();
+                this._.moveTo(point.x, point.y);
+                this._.arc(point.x, point.y, 2, 0, Math.PI*2, false);
+                this._.closePath();
+                this._.fill();
+            },
+            path: [
+                ['arc', 16, 16, 12, 0, 360]
+            ]
+        });
+    square.play();
+    return square;
+    //item.appendChild(square.canvas);
+}
+$(document).ready(function() {
+    var elements = document.getElementsByClassName('wait'); 
+    for (var i = 0; i < elements.length; i++) {
+        id = parseInt(elements[i].id.substring(5));
+        sendRequest(id);
+        elements[i].appendChild(loadWaiting().canvas);
+    }
+});
+function sendRequest(id) {
+    var req;
+    if (window.XMLHttpRequest) {
+        req = new XMLHttpRequest();
+    } else {
+        req = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    req.onreadystatechange = function(){handleResponse(req);};
+    req.open("GET", "/submission_json/" + id, true);
+    req.send(); 
+}
+function handleResponse(req) {
+    if (req.readyState != 4 || req.status != 200) {
+        return;
+    }
+    var items = JSON.parse(req.responseText);
+    id = items['id']
+    state = items['state']
+    if (state != "Waiting") {
+        element = document.getElementById('wait-' + id);
+        element.innerHTML = "<a href='submission_single/" + id + "'>" + state + "</a>";
+    } else {
+        setTimeout(function(){
+            sendRequest(id);
+        }, 500);
+    }
+    //for (var i = 0; i < items.length; i++) {
+    //    id = items[i]['id'];
+    //    state = items[i]['state'];
+    //    if (state != "Waiting") {
+    //        element = document.getElementById('wait-' + id);
+    //        element.innerHTML = "<a href='submission_single/" + id + "'>" + state + "</a>";
+    //    } else {
+    //        setTimeout(function(){
+    //            sendRequest(id);
+    //        }, 500);
+    //    }
+    //}
+}
+</script>
+<div class="container">
+    <table class="table">
+        <thead>
+          <tr>
+            <th>User Name</th>
+            <th>Problem</th>
+            <th>Status</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for submission in submissions %}
+            <tr>
+                <td><a href='{% url 'profile' submission.user.id %}'>{{submission.user.username}}</a></td>
+                <td><a href='{% url 'single_problem' submission.problem.id%}'>{{submission.problem.id}}:{{submission.problem.title}}</a></td>
+                {% if submission.state == 'Waiting' %}
+                <td id='wait-{{submission.id}}' class='wait'></td> 
+                {% else %}
+                <td><a href='{% url 'submission_single' submission.id%}'>{{submission.state}}</a></td>
+                {% endif %}
+                <td>{{submission.created}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

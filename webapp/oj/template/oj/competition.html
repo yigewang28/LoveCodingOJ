@@ -1,0 +1,55 @@
+{% extends "oj/base.html" %}
+
+{% block competition-active %}
+active
+{% endblock %}
+
+{% block content %}
+<style>
+  	th,td {text-align: center;}
+</style>
+
+<div class="container">
+    {% if user.profile.type == 2 %}  
+    <a href="{% url 'add_competition' %}" class="btn btn-default">Add a competition</a>
+    {% endif %}
+    <table class="table table-hover">
+	    <thead>
+	      <tr>
+	        <th>Competition ID</th>
+            <th>Competition Name</th>
+	        <th>Author</th>
+	        <th>Start Time</th>
+	        <th>End Time</th>
+	        <th>Status</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	    	{% for competition in competitions %}
+	      	<tr>
+	        	<td>{{competition.id}}</td>
+                <td>{{competition.name}}</td>
+	        	<td>{{competition.author.username}}</td>
+	        	<td>{{competition.startdate}} {{competition.starttime}}</td>
+	        	<td>{{competition.enddate}} {{competition.endtime}}</td>
+	        	{% if competition.state == 1 %}
+	        	<td><a href="{% url 'register_competition' competition.id%}">Register!</a></td>
+                {% elif competition.state == 2 %}
+	        	<td>Wait...</td>
+                {% elif competition.state == 3 %}
+	        	<td><a href="{% url 'competition_wait' competition.id%}">Get Ready!</a></td>
+	        	{% elif competition.state == 4 %}
+	        	<td><a href="{% url 'competition_single' competition.id%}">Enter!</a></td>
+	        	{% elif competition.state == 5 %}
+                <td>Competition Is Over!</td>
+                {% else %}
+                <td>Too late to register!</td>
+	        	{% endif %}
+	      	</tr>
+	      	{% endfor %}
+	    </tbody>
+  	</table>
+</div>
+{% endblock %}
+
+

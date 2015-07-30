@@ -1,0 +1,18 @@
+{% extends "oj/base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <form method="post" action="{% url 'register' %}">
+        <p> 
+        LoveCoding Online Judge is ...
+        </p>
+        <br>
+        <input type="submit" class="btn btn-info" value="Login" />
+        <a href="/register" class="btn btn-info" role="button">Sign up</a>
+        {% csrf_token %}
+    </form>
+</div>
+{% endblock %}
+
+

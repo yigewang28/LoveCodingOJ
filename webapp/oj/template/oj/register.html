@@ -1,0 +1,24 @@
+{% extends "oj/base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-4">
+            <form method="post" action="{% url 'register' %}">
+                <h2> 
+                Please sign up here:
+                </h2>
+                <table>
+                {{form}}
+                </table>
+                <br>
+                <input type="submit" class="btn btn-primary" value="Register" /> <a href="/logout" class="btn btn-primary" role="button">Cancel</a>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

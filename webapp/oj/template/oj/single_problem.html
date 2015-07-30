@@ -1,0 +1,84 @@
+{% extends "oj/base.html" %}
+
+{% block problem-active %}
+active
+{% endblock %}
+
+{% block content %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'oj/codemirror.css' %}">
+<link rel="stylesheet" href="{% static 'oj/local.css' %}">
+<script src="{% static 'oj/codemirror.js' %}"></script>
+<script src="{% static 'oj/matchbrackets.js' %}"></script>
+<link rel="stylesheet" href="{% static 'oj/show-hint.css' %}">
+<script src="{% static 'oj/show-hint.js' %}"></script>
+<script src="{% static 'oj/clike.js' %}"></script>
+<script src="{% static 'oj/closebrackets.js' %}"></script>
+<style>
+.CodeMirror {min-height: 600px; width:800px; border: 1px solid #ddd; font-size: 130%}
+.CodeMirror-scroll { max-height: 600px; }
+.CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+#btn_submit {margin-bottom: 200px}
+</style>
+<script>
+window.onload = function() {
+    var myTextArea = document.getElementById("input");
+    var myCodeMirror = CodeMirror.fromTextArea(myTextArea,{
+lineNumbers: true,
+matchBrackets: true,
+tabSize: 4,
+indentUnit: 4,
+smartIndent: true,
+indentWithTabs: true,
+autoCloseBrackets: true,
+mode: "text/x-csrc"
+});
+};
+</script>
+<style>
+#sel1 {
+    width:auto
+}
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 col-md-offset-2">
+            <div class="alert alert-success" role="alert">
+                For Java Programmers: Please wrap your code in Solution class.Check <a href="{% url 'single_problem' 3 %}">this</a>.
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-0 col-md-offset-2">			
+            <div class="row">
+                <div class="col-sm-5"><h2>Problem {{problem.id}}: {{problem.title}}</div>
+                    <div class="col-sm-7"><h2><a href='{% url 'discussion_problem' problem.id %}' class="btn btn-default">Related Discussions</a></div>
+                    </div>
+                    <p class="text-success">{{problem.description |linebreaks}}</p>
+                    <br />
+
+                    <h3 class="text-primary">Write your Code here:</h3>
+                    {% if competition %}
+                    <form method="post" action="{% url 'submit_competition' competition.id problem.id %}">
+                    {% else %}
+                    <form method="post" action="{% url 'submit_code' problem.id%}">
+                        {% endif %}
+                        <label for="sel1" style="float:left;margin-right:8px;margin-top:7px">Your Programming Language:</label>
+                        <select class="form-control" name="language" id="sel1">
+                            <option>c++</option>
+                            <option>java</option>
+                            <option>c</option>
+                        </select>
+                        <br>
+                        <textarea rows="4" cols="80" id="input" name="code"></textarea>
+                        <br><br>
+                        <input type="submit" class="btn btn-primary" id="btn_submit" value="Submit" />
+                        {% csrf_token %}
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+        {% endblock %}

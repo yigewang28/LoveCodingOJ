@@ -1,0 +1,43 @@
+from django.conf.urls import patterns, include, url
+from django.contrib import admin
+from django.conf import settings
+
+urlpatterns = patterns('',
+    # Examples:
+    # url(r'^$', 'webapp.views.home', name='home'),
+    # url(r'^blog/', include('blog.urls')),
+
+    #url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'oj.views.home', name = 'home'),
+    url(r'^home$', 'oj.views.home', name = 'home'),
+    url(r'^login$', 'django.contrib.auth.views.login', {'template_name':'oj/login.html'}, name = 'login'),
+    url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name = 'logout'),
+    url(r'^register$', 'oj.views.register', name = 'register'),
+    url(r'^confirm-registration/(?P<username>[a-zA-Z0-9_@\+\-]+)/(?P<token>[a-z0-9\-]+)$', 'oj.views.confirm_registration', name='confirm'),
+    url(r'^profile/(?P<id>\d+)$', 'oj.views.profile', name = 'profile'),
+    url(r'^photo/(?P<id>\d+)$', 'oj.views.photo', name = 'photo'),
+    url(r'^myprofile$', 'oj.views.myprofile', name = 'myprofile'),
+    url(r'^edit_profile$', 'oj.views.edit_profile', name = 'edit_profile'),
+    url(r'^problems$', 'oj.views.problems', name = 'problems'),
+    url(r'^problems/(?P<id>\d+)$', 'oj.views.single_problem', name = 'single_problem'),
+    url(r'^add_problem$', 'oj.views.add_problem', name = 'add_problem'),
+    url(r'^add_competition$', 'oj.views.add_competition', name = 'add_competition'),
+    url(r'^competition_single/(?P<id>\d+)$', 'oj.views.competition_single', name = 'competition_single'),
+    url(r'^competition$', 'oj.views.competition', name = 'competition'),
+    #url(r'^discussion$', 'oj.views.discussion', name = 'discussion'),
+    url(r'^submit_code/(?P<id>\d+)$', 'oj.views.submit_code', name = 'submit_code'),
+    url(r'^submission_problem/(?P<id>\d+)$', 'oj.views.submission_problem', name = 'submission_problem'),
+    url(r'^submission_single/(?P<id>\d+)$', 'oj.views.submission_single', name = 'submission_single'),
+    url(r'^submission_user$', 'oj.views.submission_user', name = 'submission_user'),
+    url(r'^discussion_problem/(?P<id>\d+)$', 'oj.views.discussion_problem', name = 'discussion_problem'),
+    url(r'^add_discussion_problem/(?P<id>\d+)$', 'oj.views.add_discussion_problem', name = 'add_discussion_problem'),
+    url(r'^single_competition_problem/(?P<competition_id>\d+)/(?P<problem_id>\d+)$', 'oj.views.single_competition_problem', name = 'single_competition_problem'),
+    url(r'^register_competition/(?P<id>\d+)$', 'oj.views.register_competition', name = 'register_competition'),
+    #url(r'^finish_competition/(?P<id>\d+)$', 'oj.views.finish_competition', name = 'finish_competition'),
+    url(r'^add_comment_discussion_problem/(?P<id>\d+)$', 'oj.views.add_comment_discussion_problem', name = 'add_comment_discussion_problem'),
+    url(r'^submit_competition/(?P<competition_id>\d+)/(?P<problem_id>\d+)$', 'oj.views.submit_competition', name = 'submit_competition'),
+    url(r'^add_news$', 'oj.views.add_news', name = 'add_news'),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    url(r'^competition_wait/(?P<id>\d+)$', 'oj.views.competition_wait', name = 'competition_wait'),
+    url(r'^submission_json/(?P<id>\d+)$', 'oj.views.submission_json', name = 'submission_json'),
+)

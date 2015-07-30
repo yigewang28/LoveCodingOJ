@@ -1,0 +1,14 @@
+Given a string containing only digits, restore it by returning all possible valid IP address combinations.
+
+sample input:
+2
+0000
+25525511135
+
+(2 is the number of lines and the following lines are IP Strings)
+
+sample output:
+0.0.0.0
+255.255.11.135, 255.255.111.35
+
+(Order does not matter)

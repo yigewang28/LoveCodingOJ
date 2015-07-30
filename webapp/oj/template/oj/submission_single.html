@@ -1,0 +1,22 @@
+{% extends "oj/base.html" %}
+
+{% block submission-active %}
+active
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="col-md-8 col-md-offset-2">
+    <div class="page-header"> 
+        <h1><a href='{% url 'single_problem' submission.problem.id%}'>{{submission.problem.id}}:{{submission.problem.title}}</a></h1>
+
+         <h2>Problem Description:</h2>
+        <p>{{submission.problem |linebreaks}}</p>
+    </div>
+    <p class="text-success">Submitted: {{submission.created}}   Status: {{submission.state}}</p>
+
+        <h2>Your Code here:</h2>
+        <pre>{{submission.code |linebreaks}}</pre>
+</div>
+{% endblock %}

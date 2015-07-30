@@ -1,0 +1,31 @@
+{% extends "oj/base.html" %}                                                                                                                               
+ 
+{% block profile-active %}
+active
+{% endblock %}
+ 
+{% block content %}
+<div class="container">
+            <form action="{% url 'profile' user.id %}" method="get">
+                <div>
+                    {% if user %}
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-3">
+                            <br />   
+                            <img class="img-rounded" src="{% url 'photo' profile.id %}" width="200px">
+                            <h2><a href="/edit_profile" class="btn btn-default">Edit your profile</a> 
+                        </div>
+ 
+                        <div class="col-md-6"> 
+                            <h2>{{user.username}}</h2>
+                            <br />
+                            <h4 class="text-primary">School/Company:&nbsp{{profile.school}}</h4>
+                            <h4 class="text-Success">Website: &nbsp{{profile.website}}</h4>
+                            <h4 class="text-danger">About me: &nbsp{{profile.bio}}</h4>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </form>
+</div>
+    {% endblock %}
